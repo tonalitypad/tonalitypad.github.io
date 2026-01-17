@@ -482,7 +482,6 @@ const SHARED_SONG_OPTION = "shared";
 let sharedSongContent = "";
 let sharedSongKey = "";
 
-// TODO: Finish writing this
 const WELCOME_TEXT = `{Welcome to Tonality Pad!}
 
 C D E F G A B C {Regular notes}
@@ -497,31 +496,31 @@ A4 B R2 C4 D E8 F R G A1 {R for rests}
 
 C4. B8 A4 G E2 D {Dotted rhythm}
 
-[ / / ] {Multiple notes at once}
+[C4 B C1 / E4 D F E D2 / G4 G A G G2] {Multiple notes at once}
 
 D4 D8 F# A F A B B4 Bb A2 {Sharp (#) and flat (b)}
 
 F4 F B B@ B F | F1 {Accidentals continue until canceled by natural sign (@) or barline}
 
-{Fine pitch adjustments with + and -}
+C4 C+ C- R Bb-- Bb- Bbo Bb+ R1 | {Fine pitch adjustments with + and -}
 
 {These can be used to improve harmony:}
-{Bad harmony gets marked in gray}
-{Better!}
+  [D /F#/A] {Bad harmony gets marked in gray}
+  [D-/F#/A] {Better!}
 
-{Cancel fine adjustments with o or barline}
+| D4 D- D A+ A Ao A | D1 {Cancel fine adjustments with o or barline}
 
-{Key signature}
+K(F#+A+) D4 F A D, | D F@ Ao D, | D F A K() D, F A {Key signature}
 
-{Set tempo ()}
+C,4 D E T(4=180) F G A B T(2=40) C D C1 {Set tempo (quarter note at 180bpm, half note at 40bpm, etc.)}
 
-{Slurred or staccato articulation}
+C,4 D E~ F G~ G A: B:: C::: C {Slurred or staccato articulation}
 
-{Reset the octave/rhythm context with O}
+C8 D E F O C D E F {Reset the octave context with O}
 
-{...or set a new context by modifying O}
+C D E O2 F G G4 F O''8 F G O F1 {...or set a new octave/rhythm context by modifying O}
 
-X8 X16 X X R X R X8 X16 X X R X R R2 {X for a noise sound}
+X8 X16 X X R X R X8 X16 X X R X R R2 R4 {X for a noise sound}
 
 {Force a particular instrument with $ plus a letter:}
 $s C D {s for Sine wave ◯}
@@ -544,7 +543,7 @@ Bb-''2.~
   7. Articulation: ~
 }
 
-{About the hexagonal grid: This is the "Tonnetz" (Tone Network), first devised by Leonard Euler to depict pitch ratios involving the numbers 2, 3, and 5. While factors of 2 (octaves) are ignored, factors of 3 ("perfect fifths") are represented by moving horizontally across the grid, and factors of 5 ("major thirds") by moving along the "1-o'clock / 7-o'clock" axis. Thus, adjacent notes will form nice harmonies, while distant notes will sound bad together. Sharps/flats shift the pitch by 25:24, while pluses/minuses tweak it by the smaller interval of 81:80 (the so-called "syntonic comma"). With this notation we can represent all ratios involving 2, 3, and 5.}`;
+{About the hexagonal grid: This is the "Tonnetz" (Tone Network), first devised by Leonard Euler to depict pitch ratios involving multiples of 2, 3, and 5. While factors of 2 (octaves) are ignored, factors of 3 ("perfect fifths") are represented by moving horizontally across the grid, and factors of 5 ("major thirds") by moving along the "1-o'clock / 7-o'clock" axis. Thus, adjacent notes will form nice harmonies, while distant notes will sound bad together. Sharps/flats shift the pitch by 25:24, while pluses/minuses tweak it by the smaller interval of 81:80 (the so-called "syntonic comma"). With this notation we can represent all ratios involving 2, 3, and 5.}`;
 
 ELEMENTS.song.value = WELCOME_TEXT;
 refreshHighlights();
