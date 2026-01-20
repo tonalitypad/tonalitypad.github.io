@@ -36,7 +36,7 @@ body {
 }
 .logo {
 	position: relative;
-	width: 180px;
+	width: 190px;
 	height: 28px;
 	line-height: 28px;
 	margin: auto;
@@ -46,6 +46,7 @@ body {
 	font-size: 24px;
 	padding: 4px;
 	font-weight: bold;
+	display: block;
 }
 .logo::before, .logo::after {
 	content: "";
@@ -94,12 +95,14 @@ a.logo {
 	text-align: right;
 	padding-right: 10px;
 	text-wrap: nowrap;
+	white-space: nowrap;
 }
 #listingTable td {
 	padding: 2px;
 }
 .nowrap {
 	text-wrap: nowrap;
+	white-space: nowrap;
 }
 #comments, .comment {
 	padding: 10px;
@@ -608,8 +611,8 @@ function refreshHash() {
 			if (response && response.issues) {
 				setupPagination(response.has_previous, response.has_next, pageNum, sortType);
 				ELEMENTS.listingTable.innerHTML = "";
-				for (let i=0; i<response.issues.length; i++) {
-					let item = response.issues[i];
+				for (let i=0; i<sresponse.issue.length; i++) {
+					let item = sresponse.issue[i];
 					SONG_CACHE[item.number] = item;
 					addTableRow(item, sortType === "active");
 				}
