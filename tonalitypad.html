@@ -41,7 +41,6 @@ textarea, #highlights {
 	left: 11px;
 }
 #highlights {
-	position: absolute;
 	pointer-events: none;
 	color: transparent;
 }
@@ -259,7 +258,7 @@ span.narrow {
 		<span onclick="playSong()" id="playButton">▶️</span>
 		<span class="blockedWhilePlaying" onclick="startRecording()" id="recordButton">⏺</span>
 		<span id="recordIndicator" style="display:none" title="Download audio file once playback stops">•</span>
-		<button style="cursor: pointer; font-size: 14pt" onclick="shareOnGithub()">Share on GitHub</button>
+		<button style="cursor: pointer; font-size: 14pt" onclick="shareOnGithub()">Post on GitHub</button>
 		<span class="blockedWhilePlaying" onclick="shareLink()" id="shareLinkButton">#️⃣</span>
 		<span id="copiedTooltip">Copied link</span>
 	</div>
@@ -285,7 +284,7 @@ const NOTE_BREAK = 0.1;
 const NOISE_BREAK = 0.25;
 const BREAK_MAX_MS = 100;
 const FADEOUT_MS = 100;
-const BASE_VOLUME = 0.02;
+const BASE_VOLUME = 0.1;
 const RECORDING_GAIN = 3;
 const INSTRUMENT_LETTERS = {
 	s: "sine",
@@ -332,20 +331,30 @@ const PLAYBACK_STATE = {
 // -----
 // Highlighting:
 
+function sanitize(string) {
+	return string
+		.replaceAll("&", "&amp;")
+		.replaceAll("<", "&lt;")
+		.replaceAll(">", "&gt;")
+		.replaceAll('"', "&quot;")
+		.replaceAll("'", "&apos;");
+}
+
 function parseTextByTokens(text) {
 	let output = "";
 	let tokenIndex = 0;
 	let spaceLast = !!text;
 	for (let i=0; i<text.length; i++) {
-		let c = text[i];
-		if (STANDALONE_CHARS.includes(c)) {
+		let cr = text[i];
+		let c = sanitize(cr);
+		if (STANDALONE_CHARS.includes(cr)) {
 			if (tokenIndex) {
 				output += "</span>";
 			}
 			output += "<span id=\"ht_" + tokenIndex + "\">" + c + "</span>";
 			tokenIndex++;
 			spaceLast = true;
-		} else if (c.match(/\s/)) {
+		} else if (cr.match(/\s/)) {
 			if (spaceLast) {
 				output += c;
 			} else {
@@ -361,6 +370,9 @@ function parseTextByTokens(text) {
 				output += c;
 			}
 		}
+	}
+	if (text[text.length-1] === "\n") {
+		output += "\n";
 	}
 	if (tokenIndex && !spaceLast) {
 		output += "</span>";
@@ -1342,6 +1354,7 @@ function stopRecording() {
 
 function playSong() {
 	if (!PLAYBACK_STATE.playing) {
+		refreshHighlights();
 		ELEMENTS.playButton.innerText = "⏹";
 		let textarea = document.getElementById("song");
 		let songNotation = textarea.value;
