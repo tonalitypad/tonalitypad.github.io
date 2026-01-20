@@ -611,8 +611,8 @@ function refreshHash() {
 			if (response && response.issues) {
 				setupPagination(response.has_previous, response.has_next, pageNum, sortType);
 				ELEMENTS.listingTable.innerHTML = "";
-				for (let i=0; i<sresponse.issue.length; i++) {
-					let item = sresponse.issue[i];
+				for (let i=0; i<response.issue.length; i++) {
+					let item = response.issue[i];
 					SONG_CACHE[item.number] = item;
 					addTableRow(item, sortType === "active");
 				}
